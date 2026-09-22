@@ -1,20 +1,19 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.EmployeeRequest;
-import ca.skyfield.quickfield.dto.EmployeeResponse;
+import ca.skyfield.quickfield.dto.TaskRequest;
+import ca.skyfield.quickfield.dto.TaskResponse;
 
 import java.util.List;
 
 public interface TaskService {
 
-        EmployeeResponse createTask(EmployeeRequest employeeRequest);
+        TaskResponse createTask(TaskRequest taskRequest);
 
-        List<EmployeeResponse> getAllTasks();
+        List<TaskResponse> getAllTasks();
 
-        Long updateTask(Long employeeId, EmployeeRequest employeeRequest);
+        Long updateTask(Long taskId, TaskRequest taskRequest);
 
-        void deleteTask(Long employeeId);
-
+        void deleteTask(Long taskId);
 
     }
 
