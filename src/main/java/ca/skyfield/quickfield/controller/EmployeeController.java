@@ -4,6 +4,7 @@ import ca.skyfield.quickfield.dto.EmployeeRequest;
 import ca.skyfield.quickfield.dto.EmployeeResponse;
 import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.service.EmployeeServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+    public ResponseEntity<EmployeeResponse> createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
         EmployeeResponse employeeResponse = employeeService.createEmployee(employeeRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeResponse);
@@ -35,7 +36,7 @@ public class EmployeeController {
 
     @PutMapping("/{employeeId}")
     public ResponseEntity<?> updateEmployee(@PathVariable("employeeId") Long employeeId,
-                                            @RequestBody EmployeeRequest employeeRequest) {
+                                            @Valid @RequestBody EmployeeRequest employeeRequest) {
         Long updatedEmployeeId = employeeService.updateEmployee(employeeId, employeeRequest);
 
         HttpHeaders headers = new HttpHeaders();
