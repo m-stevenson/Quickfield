@@ -3,7 +3,7 @@ package ca.skyfield.quickfield.service;
 import ca.skyfield.quickfield.dto.TaskRequest;
 import ca.skyfield.quickfield.dto.TaskResponse;
 import ca.skyfield.quickfield.model.Task;
-import ca.skyfield.quickfield.model.enums.Status;
+import ca.skyfield.quickfield.model.enums.TaskState;
 import ca.skyfield.quickfield.repository.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +26,14 @@ public class TaskServiceImpl implements TaskService {
         Task task = Task.builder()
                 .title(taskRequest.title())
                 .description(taskRequest.description())
-                .status(Status.CREATED)
+                .taskState(TaskState.TODO)
                 .build();
 
         return new TaskResponse(
                 task.getId(),
                 task.getTitle(),
                 task.getDescription(),
-                task.getStatus(),
+                task.getTaskState(),
                 List.of()
         );
     }
@@ -54,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
                 task.getId(),
                 task.getTitle(),
                 task.getDescription(),
-                task.getStatus(),
+                task.getTaskState(),
                 List.of()
         );
     }
@@ -68,7 +68,7 @@ public class TaskServiceImpl implements TaskService {
 
         task.setTitle(taskRequest.title());
         task.setDescription(taskRequest.description());
-        task.setStatus(taskRequest.status());
+        task.setTaskState(taskRequest.taskState());
 
         return taskRepository.save(task).getId();
     }

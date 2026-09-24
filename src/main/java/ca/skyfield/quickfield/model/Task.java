@@ -1,6 +1,6 @@
 package ca.skyfield.quickfield.model;
 
-import ca.skyfield.quickfield.model.enums.Status;
+import ca.skyfield.quickfield.model.enums.TaskState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -31,7 +31,7 @@ public class Task {
     @NotBlank(message = "Status is required")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private TaskState taskState;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
