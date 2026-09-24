@@ -28,15 +28,19 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EmployeeResponse> createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
+    public ResponseEntity<EmployeeResponse> createEmployee(
+            @Valid @RequestBody EmployeeRequest employeeRequest
+    ) {
         EmployeeResponse employeeResponse = employeeService.createEmployee(employeeRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeResponse);
     }
 
     @PutMapping("/{employeeId}")
-    public ResponseEntity<?> updateEmployee(@PathVariable("employeeId") Long employeeId,
-                                            @Valid @RequestBody EmployeeRequest employeeRequest) {
+    public ResponseEntity<?> updateEmployee(
+            @PathVariable("employeeId") Long employeeId,
+            @Valid @RequestBody EmployeeRequest employeeRequest
+    ) {
         Long updatedEmployeeId = employeeService.updateEmployee(employeeId, employeeRequest);
 
         HttpHeaders headers = new HttpHeaders();
@@ -48,6 +52,7 @@ public class EmployeeController {
     @DeleteMapping("/{employeeId}")
     public ResponseEntity<?> deleteEmployee(@PathVariable("employeeId") Long employeeId) {
             employeeService.deleteEmployee(employeeId);
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
