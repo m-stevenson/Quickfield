@@ -3,6 +3,7 @@ package ca.skyfield.quickfield.controller;
 import ca.skyfield.quickfield.dto.TaskRequest;
 import ca.skyfield.quickfield.dto.TaskResponse;
 import ca.skyfield.quickfield.model.Task;
+import ca.skyfield.quickfield.model.enums.TaskState;
 import ca.skyfield.quickfield.service.TaskServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,19 @@ public class TaskController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/tasks/" + updatedTaskId);
+
+        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{taskId}/status")
+    public ResponseEntity<?> updateTaskState(
+            @PathVariable("taskId") Long taskId,
+            @Valid @RequestBody TaskState taskState
+    ) {
+        Long updatedTaskId = taskService.updateTaskState(taskId, taskState);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/api/tasks/status" + updatedTaskId);
 
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
