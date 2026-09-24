@@ -74,6 +74,25 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Long updateTaskState(Long taskId, TaskState taskState) {
+        log.debug("Updating task with id {}", taskId);
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new EntityNotFoundException("Task not found"));
+
+        TaskState currentState = task.getTaskState();
+        if (!currentState.canTransitionTo(taskState)) {
+            throw new IllegalStateException(
+                    String.format("Invalid transition from %s to %s", currentState, taskState)
+            );
+        }
+
+        task.setTaskState(taskState);
+
+        return taskRepository.save(task).getId();
+    }
+
+    @Override
     public void deleteTask(Long taskId) {
         log.debug("Deleting task with id {}", taskId);
 
