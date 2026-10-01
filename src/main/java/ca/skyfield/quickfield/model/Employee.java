@@ -1,5 +1,6 @@
 package ca.skyfield.quickfield.model;
 
+import ca.skyfield.quickfield.model.enums.Role;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +37,10 @@ public class Employee implements Serializable {
     @Size(min = 9, max = 10)
     @Column(nullable = false)
     private String phone;
+
+    @NotBlank(message = "Role is required")
+    @Column(nullable = false)
+    private Role role;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
