@@ -39,6 +39,7 @@ public class Employee implements Serializable {
     private String phone;
 
     @NotBlank(message = "Role is required")
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
