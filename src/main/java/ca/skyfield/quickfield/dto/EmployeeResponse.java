@@ -2,6 +2,7 @@ package ca.skyfield.quickfield.dto;
 
 import ca.skyfield.quickfield.dto.TaskRequest;
 import ca.skyfield.quickfield.model.Task;
+import ca.skyfield.quickfield.model.enums.Role;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ public record EmployeeResponse(
         String firstName,
         String lastName,
         String phone,
+        Role role,
         List<Long> taskIds
 ) {
 }
