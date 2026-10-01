@@ -2,7 +2,6 @@ package ca.skyfield.quickfield.controller;
 
 import ca.skyfield.quickfield.dto.EmployeeRequest;
 import ca.skyfield.quickfield.dto.EmployeeResponse;
-import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.service.EmployeeServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -55,9 +54,4 @@ public class EmployeeController {
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
-
-
 }
