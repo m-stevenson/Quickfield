@@ -4,6 +4,7 @@ import ca.skyfield.quickfield.dto.EmployeeRequest;
 import ca.skyfield.quickfield.dto.EmployeeResponse;
 import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.model.Task;
+import ca.skyfield.quickfield.model.enums.Role;
 import ca.skyfield.quickfield.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .firstName(employeeRequest.firstName())
                 .lastName(employeeRequest.lastName())
                 .phone(employeeRequest.phone())
+                .role(Role.EMPLOYEE)    // Default role on creation
                 .build();
 
         employeeRepository.save(employee);
@@ -36,6 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getPhone(),
+                employee.getRole(),
                 List.of()
         );
     }
@@ -57,6 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getPhone(),
+                employee.getRole(),
                 List.of()
         );
     }
@@ -83,6 +87,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getPhone(),
+                employee.getRole(),
                 taskIds
         );
     }
