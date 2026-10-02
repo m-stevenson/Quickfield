@@ -10,4 +10,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("SELECT DISTINCT e FROM Employee e LEFT JOIN FETCH e.tasks")
     List<Employee> findAllWithTasks();
+
+    Employee findByEmail(String email);
+    boolean existsByEmail(String email);
 }
