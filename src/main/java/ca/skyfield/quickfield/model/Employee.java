@@ -1,10 +1,9 @@
 package ca.skyfield.quickfield.model;
 
 import ca.skyfield.quickfield.model.enums.Role;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -35,8 +34,18 @@ public class Employee implements Serializable {
 
     @NotBlank(message = "Phone number is required")
     @Size(min = 9, max = 10)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
+
+    @NotBlank(message = "Email is required")
+    @Email
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 32)
+    @Column(nullable = false)
+    private String password;
 
     @NotBlank(message = "Role is required")
     @Enumerated(EnumType.STRING)
