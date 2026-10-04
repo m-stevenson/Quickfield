@@ -18,6 +18,9 @@ public record EmployeeRequest(
         @NotBlank(message = "Phone number is required")
         String phone,
 
+        @NotBlank(message = "Email address is required")
+        String email,
+
         List<@NotNull Long> taskIds
 ) {
 }
