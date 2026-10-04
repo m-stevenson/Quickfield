@@ -38,6 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getPhone(),
+                employee.getEmail(),
                 employee.getRole(),
                 List.of()
         );
@@ -60,6 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getPhone(),
+                employee.getEmail(),
                 employee.getRole(),
                 List.of()
         );
@@ -87,6 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getPhone(),
+                employee.getEmail(),
                 employee.getRole(),
                 taskIds
         );
