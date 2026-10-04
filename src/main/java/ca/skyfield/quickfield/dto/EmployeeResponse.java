@@ -11,6 +11,7 @@ public record EmployeeResponse(
         String firstName,
         String lastName,
         String phone,
+        String email,
         Role role,
         List<Long> taskIds
 ) {
