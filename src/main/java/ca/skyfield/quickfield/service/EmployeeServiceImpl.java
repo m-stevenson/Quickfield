@@ -9,6 +9,8 @@ import ca.skyfield.quickfield.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,14 +47,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeResponse> getAllEmployees(){
-        log.info("Retrieving all employees");
+    public Page<EmployeeResponse> getAllEmployees(Pageable pageable){
+        log.info("Retrieving page {} of all employees", pageable.getPageNumber());
 
-        List<Employee> employees = employeeRepository.findAll();
+        Page<Employee> employees = employeeRepository.findAll(pageable);
 
-        return employees.stream()
-                .map(this::mapToEmployeeResponse)
-                .toList();
+        return employees.map(this::mapToEmployeeResponse);
     }
 
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
@@ -112,7 +112,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Long updateEmployeeRole(Long employeeId, Role role) {
-        log.info("Updating employee role with id {}", employeeId);
+        log.info("Updating employee with id {} to role of {}", employeeId, role);
 
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
