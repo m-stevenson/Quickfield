@@ -34,7 +34,7 @@ public class Employee implements Serializable {
     private String lastName;
 
     @NotBlank(message = "Phone number is required")
-    @Size(min = 9, max = 10)
+    @Size(min = 9, max = 12)
     @Column(nullable = false, unique = true)
     private String phone;
 
