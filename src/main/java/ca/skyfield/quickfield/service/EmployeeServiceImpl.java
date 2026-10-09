@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeResponse createEmployee(EmployeeRequest employeeRequest) {
-        log.debug("Creating new employee {}", employeeRequest);
+        log.info("Creating new employee {}", employeeRequest);
 
         Employee employee = Employee.builder()
                 .firstName(employeeRequest.firstName())
@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeResponse> getAllEmployees(){
-        log.debug("Retrieving all employees");
+        log.info("Retrieving all employees");
 
         List<Employee> employees = employeeRepository.findAll();
 
@@ -69,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeResponse> getAllEmployeesWithTasks() {
-        log.debug("Retrieving all employees with tasks");
+        log.info("Retrieving all employees with tasks");
 
         List<Employee> employees = employeeRepository.findAllWithTasks();
 
@@ -97,7 +97,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Long updateEmployee(Long employeeId, EmployeeRequest employeeRequest) {
-        log.debug("Updating employee with id {}", employeeId);
+        log.info("Updating employee with id {}", employeeId);
 
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
@@ -111,8 +111,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Long updateEmployeeRole(Long employeeId, Role role) {
+        log.info("Updating employee role with id {}", employeeId);
+
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+
+        if (employee.getRole() == role) {
+            throw new IllegalStateException("Employee already has this role");
+        }
+
+        employee.setRole(role);
+
+        return employeeRepository.save(employee).getId();
+
+    }
+
+    @Override
     public void deleteEmployee(Long employeeId) {
-        log.debug("Deleting employee with id {}", employeeId);
+        log.info("Deleting employee with id {}", employeeId);
 
         if (!employeeRepository.existsById(employeeId)){
             throw new EntityNotFoundException("Employee not found");
