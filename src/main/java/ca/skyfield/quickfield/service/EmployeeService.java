@@ -12,7 +12,7 @@ public interface EmployeeService {
 
     EmployeeResponse createEmployee(EmployeeRequest employeeRequest);
 
-    Page<EmployeeResponse> getAllEmployees(Pageable pageable);
+    Page<EmployeeResponse> getAllEmployees(Pageable pageable, Role role);
 
     List<EmployeeResponse> getAllEmployeesWithTasks();
 
