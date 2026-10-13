@@ -47,10 +47,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Page<EmployeeResponse> getAllEmployees(Pageable pageable){
-        log.info("Retrieving page {} of all employees", pageable.getPageNumber());
+    public Page<EmployeeResponse> getAllEmployees(Pageable pageable, Role role){
 
-        Page<Employee> employees = employeeRepository.findAll(pageable);
+        Page<Employee> employees;
+
+        if (role != null) {
+            log.info("Retrieving page {} of employees with role {}", pageable.getPageNumber(), role.name());
+
+            employees = employeeRepository.findByRole(role, pageable);
+        } else {
+            log.info("Retrieving page {} of all employees", pageable.getPageNumber());
+
+            employees = employeeRepository.findAll(pageable);
+        }
 
         return employees.map(this::mapToEmployeeResponse);
     }
