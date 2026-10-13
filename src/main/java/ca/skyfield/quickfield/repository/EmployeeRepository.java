@@ -1,6 +1,9 @@
 package ca.skyfield.quickfield.repository;
 
 import ca.skyfield.quickfield.model.Employee;
+import ca.skyfield.quickfield.model.enums.Role;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,5 +15,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllWithTasks();
 
     Employee findByEmail(String email);
+
     boolean existsByEmail(String email);
+
+    Page<Employee> findByRole(Role role, Pageable pageable);
 }
