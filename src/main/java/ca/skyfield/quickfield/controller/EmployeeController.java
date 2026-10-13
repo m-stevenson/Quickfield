@@ -38,14 +38,17 @@ public class EmployeeController {
             @RequestParam(defaultValue = "id")
             String sortBy,
             @RequestParam(defaultValue = "true")
-            boolean ascending
+            boolean ascending,
+            @RequestParam(required = false)
+            Role role
+
     ){
         Sort sort = ascending ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return employeeService.getAllEmployees(pageable);
+        return employeeService.getAllEmployees(pageable, role);
     }
 
     @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
