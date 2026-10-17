@@ -14,6 +14,8 @@ public interface EmployeeService {
 
     Page<EmployeeResponse> getAllEmployees(Pageable pageable, Role role);
 
+    EmployeeResponse getEmployeeById(Long employeeId);
+
     List<EmployeeResponse> getAllEmployeesWithTasks();
 
     Long updateEmployee(Long employeeId, EmployeeRequest employeeRequest);

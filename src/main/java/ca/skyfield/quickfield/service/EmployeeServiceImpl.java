@@ -64,6 +64,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees.map(this::mapToEmployeeResponse);
     }
 
+    @Override
+    public EmployeeResponse getEmployeeById(Long employeeId) {
+
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+
+        return mapToEmployeeResponse(employee);
+
+    }
+
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
         return new EmployeeResponse(
                 employee.getId(),
