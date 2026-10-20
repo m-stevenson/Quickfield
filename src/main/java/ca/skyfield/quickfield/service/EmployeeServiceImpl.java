@@ -115,17 +115,28 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Long updateEmployee(Long employeeId, EmployeeRequest employeeRequest) {
+    public EmployeeResponse updateEmployee(Long employeeId, EmployeeRequest employeeRequest) {
         log.info("Updating employee with id {}", employeeId);
 
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
 
-        employee.setFirstName(employeeRequest.firstName());
-        employee.setLastName(employeeRequest.lastName());
-        employee.setPhone(employeeRequest.phone());
+        if (employeeRequest.firstName() != null) {
+            employee.setFirstName(employeeRequest.firstName());
+        }
+        if (employeeRequest.lastName() != null) {
+            employee.setLastName(employeeRequest.lastName());
+        }
+        if (employeeRequest.phone() != null) {
+            employee.setPhone(employeeRequest.phone());
+        }
+        if (employeeRequest.email() != null) {
+            employee.setEmail(employeeRequest.email());
+        }
 
-        return employeeRepository.save(employee).getId();
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        return mapToEmployeeResponse(savedEmployee);
 
     }
 
