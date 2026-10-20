@@ -68,7 +68,7 @@ public class EmployeeController {
             @PathVariable("employeeId") Long employeeId,
             @Valid @RequestBody EmployeeRequest employeeRequest
     ) {
-        Long updatedEmployeeId = employeeService.updateEmployee(employeeId, employeeRequest);
+        Long updatedEmployeeId = employeeService.updateEmployee(employeeId, employeeRequest).id();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/employees/" + updatedEmployeeId);
