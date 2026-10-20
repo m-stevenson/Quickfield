@@ -7,20 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record EmployeeRequest(
-        Long id,
-
-        @NotBlank(message = "First name is required")
         String firstName,
-
-        @NotBlank(message = "Last name is required")
         String lastName,
-
-        @NotBlank(message = "Phone number is required")
         String phone,
-
-        @NotBlank(message = "Email address is required")
         String email,
-
         List<@NotNull Long> taskIds
 ) {
 }
