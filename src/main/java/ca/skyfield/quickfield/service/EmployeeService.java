@@ -1,7 +1,7 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.EmployeeRequest;
-import ca.skyfield.quickfield.dto.EmployeeResponse;
+import ca.skyfield.quickfield.dto.employee.EmployeeRequest;
+import ca.skyfield.quickfield.dto.employee.EmployeeResponse;
 import ca.skyfield.quickfield.model.enums.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

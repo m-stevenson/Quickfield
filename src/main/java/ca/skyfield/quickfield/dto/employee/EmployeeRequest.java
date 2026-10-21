@@ -1,7 +1,5 @@
-package ca.skyfield.quickfield.dto;
+package ca.skyfield.quickfield.dto.employee;
 
-import ca.skyfield.quickfield.dto.TaskRequest;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;

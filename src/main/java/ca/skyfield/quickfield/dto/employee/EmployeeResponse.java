@@ -1,7 +1,5 @@
-package ca.skyfield.quickfield.dto;
+package ca.skyfield.quickfield.dto.employee;
 
-import ca.skyfield.quickfield.dto.TaskRequest;
-import ca.skyfield.quickfield.model.Task;
 import ca.skyfield.quickfield.model.enums.Role;
 
 import java.util.List;

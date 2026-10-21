@@ -1,17 +1,14 @@
 package ca.skyfield.quickfield.controller;
 
-import ca.skyfield.quickfield.dto.EmployeeRequest;
-import ca.skyfield.quickfield.dto.LoginRequest;
-import ca.skyfield.quickfield.dto.RegisterRequest;
+import ca.skyfield.quickfield.dto.auth.LoginRequest;
+import ca.skyfield.quickfield.dto.auth.RegisterRequest;
 import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.model.enums.Role;
 import ca.skyfield.quickfield.repository.EmployeeRepository;
 import ca.skyfield.quickfield.security.JwtUtil;
-import ca.skyfield.quickfield.service.EmployeeService;
 import ca.skyfield.quickfield.service.EmployeeServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

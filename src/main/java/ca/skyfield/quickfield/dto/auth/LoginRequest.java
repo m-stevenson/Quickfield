@@ -1,4 +1,4 @@
-package ca.skyfield.quickfield.dto;
+package ca.skyfield.quickfield.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 

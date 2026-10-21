@@ -1,7 +1,7 @@
 package ca.skyfield.quickfield.controller;
 
-import ca.skyfield.quickfield.dto.EmployeeRequest;
-import ca.skyfield.quickfield.dto.EmployeeResponse;
+import ca.skyfield.quickfield.dto.employee.EmployeeRequest;
+import ca.skyfield.quickfield.dto.employee.EmployeeResponse;
 import ca.skyfield.quickfield.model.enums.Role;
 import ca.skyfield.quickfield.service.EmployeeServiceImpl;
 import jakarta.validation.Valid;
@@ -16,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")

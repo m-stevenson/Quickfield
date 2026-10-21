@@ -1,8 +1,7 @@
 package ca.skyfield.quickfield.controller;
 
-import ca.skyfield.quickfield.dto.TaskRequest;
-import ca.skyfield.quickfield.dto.TaskResponse;
-import ca.skyfield.quickfield.model.Task;
+import ca.skyfield.quickfield.dto.task.TaskRequest;
+import ca.skyfield.quickfield.dto.task.TaskResponse;
 import ca.skyfield.quickfield.model.enums.TaskState;
 import ca.skyfield.quickfield.service.TaskServiceImpl;
 import jakarta.validation.Valid;

@@ -1,7 +1,7 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.TaskRequest;
-import ca.skyfield.quickfield.dto.TaskResponse;
+import ca.skyfield.quickfield.dto.task.TaskRequest;
+import ca.skyfield.quickfield.dto.task.TaskResponse;
 import ca.skyfield.quickfield.model.enums.TaskState;
 
 import java.util.List;

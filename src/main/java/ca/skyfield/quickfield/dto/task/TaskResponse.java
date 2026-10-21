@@ -1,4 +1,4 @@
-package ca.skyfield.quickfield.dto;
+package ca.skyfield.quickfield.dto.task;
 
 import ca.skyfield.quickfield.model.enums.TaskState;
 
