@@ -54,10 +54,10 @@ public class Employee implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "employee_task",
+            name = "employee_order",
             joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "task_id")
+            inverseJoinColumns = @JoinColumn(name = "order_id")
     )
-    private List<Task> tasks = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
 }

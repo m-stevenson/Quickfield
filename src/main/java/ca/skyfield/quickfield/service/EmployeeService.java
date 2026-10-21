@@ -17,7 +17,7 @@ public interface EmployeeService {
 
     EmployeeResponse getEmployeeById(Long employeeId);
 
-    List<EmployeeResponse> getAllEmployeesWithTasks();
+    List<EmployeeResponse> getAllEmployeesWithOrders();
 
     EmployeeResponse updateEmployee(Long employeeId, UpdateEmployeeRequest employeeRequest);
 

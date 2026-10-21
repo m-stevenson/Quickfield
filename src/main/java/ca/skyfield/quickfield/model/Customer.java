@@ -37,10 +37,10 @@ public class Customer implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "customer_task",
+            name = "customer_order",
             joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "task_id")
+            inverseJoinColumns = @JoinColumn(name = "order_id")
     )
-    private List<Task> tasks = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
 }

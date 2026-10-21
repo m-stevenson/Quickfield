@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    @Query("SELECT DISTINCT e FROM Employee e LEFT JOIN FETCH e.tasks")
-    List<Employee> findAllWithTasks();
+    @Query("SELECT DISTINCT e FROM Employee e LEFT JOIN FETCH e.orders")
+    List<Employee> findAllWithOrders();
 
     Employee findByEmail(String email);
 

@@ -4,7 +4,7 @@ import ca.skyfield.quickfield.dto.employee.CreateEmployeeRequest;
 import ca.skyfield.quickfield.dto.employee.EmployeeResponse;
 import ca.skyfield.quickfield.dto.employee.UpdateEmployeeRequest;
 import ca.skyfield.quickfield.model.Employee;
-import ca.skyfield.quickfield.model.Task;
+import ca.skyfield.quickfield.model.Order;
 import ca.skyfield.quickfield.model.enums.Role;
 import ca.skyfield.quickfield.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -88,20 +88,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeResponse> getAllEmployeesWithTasks() {
-        log.info("Retrieving all employees with tasks");
+    public List<EmployeeResponse> getAllEmployeesWithOrders() {
+        log.info("Retrieving all employees with orders");
 
-        List<Employee> employees = employeeRepository.findAllWithTasks();
+        List<Employee> employees = employeeRepository.findAllWithOrders();
 
         return employees.stream()
-                .map(this::mapToEmployeeResponseWithTasks)
+                .map(this::mapToEmployeeResponseWithOrders)
                 .toList();
     }
 
-    private EmployeeResponse mapToEmployeeResponseWithTasks(Employee employee) {
-        List<Long> taskIds = employee.getTasks() == null ? List.of() :
-                employee.getTasks().stream()
-                        .map(Task::getId)
+    private EmployeeResponse mapToEmployeeResponseWithOrders(Employee employee) {
+        List<Long> orderIds = employee.getOrders() == null ? List.of() :
+                employee.getOrders().stream()
+                        .map(Order::getId)
                         .toList();
 
         return new EmployeeResponse(
@@ -111,7 +111,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.getPhone(),
                 employee.getEmail(),
                 employee.getRole(),
-                taskIds
+                orderIds
         );
     }
 

@@ -9,6 +9,6 @@ public record UpdateEmployeeRequest(
         String lastName,
         String phone,
         String email,
-        List<@NotNull Long> taskIds
+        List<@NotNull Long> orderIds
 ) {
 }

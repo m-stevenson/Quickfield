@@ -11,6 +11,6 @@ public record EmployeeResponse(
         String phone,
         String email,
         Role role,
-        List<Long> taskIds
+        List<Long> orderIds
 ) {
 }

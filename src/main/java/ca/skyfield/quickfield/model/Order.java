@@ -1,6 +1,6 @@
 package ca.skyfield.quickfield.model;
 
-import ca.skyfield.quickfield.model.enums.TaskState;
+import ca.skyfield.quickfield.model.enums.OrderState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -8,13 +8,13 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "orders")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Task {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,11 @@ public class Task {
     @NotBlank(message = "Status is required")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TaskState taskState;
+    private OrderState orderState;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "tasks"
+            mappedBy = "orders"
     )
     private List<Employee> employees;
 

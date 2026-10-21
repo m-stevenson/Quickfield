@@ -19,6 +19,6 @@ public record CreateEmployeeRequest(
         @NotBlank(message = "Email is required")
         String email,
 
-        List<@NotNull Long> taskIds
+        List<@NotNull Long> orderIds
 )
 {}
