@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record EmployeeRequest(
+public record UpdateEmployeeRequest(
         String firstName,
         String lastName,
         String phone,
