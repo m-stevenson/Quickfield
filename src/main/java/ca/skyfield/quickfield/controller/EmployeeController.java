@@ -1,7 +1,8 @@
 package ca.skyfield.quickfield.controller;
 
-import ca.skyfield.quickfield.dto.employee.EmployeeRequest;
+import ca.skyfield.quickfield.dto.employee.CreateEmployeeRequest;
 import ca.skyfield.quickfield.dto.employee.EmployeeResponse;
+import ca.skyfield.quickfield.dto.employee.UpdateEmployeeRequest;
 import ca.skyfield.quickfield.model.enums.Role;
 import ca.skyfield.quickfield.service.EmployeeServiceImpl;
 import jakarta.validation.Valid;
@@ -53,7 +54,7 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<EmployeeResponse> createEmployee(
-            @Valid @RequestBody EmployeeRequest employeeRequest
+            @Valid @RequestBody CreateEmployeeRequest employeeRequest
     ) {
         EmployeeResponse employeeResponse = employeeService.createEmployee(employeeRequest);
 
@@ -64,7 +65,7 @@ public class EmployeeController {
     @PutMapping("/{employeeId}")
     public ResponseEntity<?> updateEmployee(
             @PathVariable("employeeId") Long employeeId,
-            @Valid @RequestBody EmployeeRequest employeeRequest
+            @Valid @RequestBody UpdateEmployeeRequest employeeRequest
     ) {
         Long updatedEmployeeId = employeeService.updateEmployee(employeeId, employeeRequest).id();
 
