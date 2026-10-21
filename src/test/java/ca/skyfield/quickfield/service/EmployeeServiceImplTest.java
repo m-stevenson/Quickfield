@@ -1,7 +1,8 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.EmployeeRequest;
-import ca.skyfield.quickfield.dto.EmployeeResponse;
+import ca.skyfield.quickfield.dto.employee.CreateEmployeeRequest;
+import ca.skyfield.quickfield.dto.employee.EmployeeResponse;
+import ca.skyfield.quickfield.dto.employee.UpdateEmployeeRequest;
 import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.model.enums.Role;
 import ca.skyfield.quickfield.repository.EmployeeRepository;
@@ -10,14 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceImplTest {
@@ -57,8 +55,8 @@ public class EmployeeServiceImplTest {
     @Test
     void shouldCreateEmployee() {
 
-        EmployeeRequest request =
-                new EmployeeRequest(
+        CreateEmployeeRequest request =
+                new CreateEmployeeRequest(
                         "Test",
                         "Employee",
                         "111-111-1111",
@@ -87,8 +85,8 @@ public class EmployeeServiceImplTest {
     @Test
     void shouldCreateEmployeeWithDefaultRole() {
 
-        EmployeeRequest request =
-                new EmployeeRequest(
+        CreateEmployeeRequest request =
+                new CreateEmployeeRequest(
                         "Test",
                         "Employee",
                         "111-111-1111",
@@ -126,8 +124,8 @@ public class EmployeeServiceImplTest {
                 .role(Role.EMPLOYEE)
                 .build();
 
-        EmployeeRequest updatedEmployee =
-                new EmployeeRequest(
+        UpdateEmployeeRequest updatedEmployee =
+                new UpdateEmployeeRequest(
                         "Updated",
                         null,
                         null,
@@ -149,6 +147,21 @@ public class EmployeeServiceImplTest {
 
         assertEquals("Updated", result.firstName());
         assertEquals("Employee", result.lastName());
+        assertEquals("test@test.ca", result.email());
+        assertEquals("566-344-1233", result.phone());
+        assertEquals(Role.EMPLOYEE, result.role());
+
+    }
+
+    @Test
+    void shouldDeleteEmployee() {
+
+        when(employeeRepository.existsById(1L))
+                .thenReturn(true);
+
+        employeeService.deleteEmployee(1L);
+
+        verify(employeeRepository, times(1)).deleteById(1L);
 
     }
 
