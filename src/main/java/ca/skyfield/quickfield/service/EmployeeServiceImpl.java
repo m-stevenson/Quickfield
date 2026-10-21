@@ -1,7 +1,8 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.employee.EmployeeRequest;
+import ca.skyfield.quickfield.dto.employee.CreateEmployeeRequest;
 import ca.skyfield.quickfield.dto.employee.EmployeeResponse;
+import ca.skyfield.quickfield.dto.employee.UpdateEmployeeRequest;
 import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.model.Task;
 import ca.skyfield.quickfield.model.enums.Role;
@@ -23,7 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Override
-    public EmployeeResponse createEmployee(EmployeeRequest employeeRequest) {
+    public EmployeeResponse createEmployee(CreateEmployeeRequest employeeRequest) {
         log.info("Creating new employee {}", employeeRequest);
 
         Employee employee = Employee.builder()
@@ -115,7 +116,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse updateEmployee(Long employeeId, EmployeeRequest employeeRequest) {
+    public EmployeeResponse updateEmployee(Long employeeId, UpdateEmployeeRequest employeeRequest) {
         log.info("Updating employee with id {}", employeeId);
 
         Employee employee = employeeRepository.findById(employeeId)

@@ -1,6 +1,7 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.employee.EmployeeRequest;
+import ca.skyfield.quickfield.dto.employee.CreateEmployeeRequest;
+import ca.skyfield.quickfield.dto.employee.UpdateEmployeeRequest;
 import ca.skyfield.quickfield.dto.employee.EmployeeResponse;
 import ca.skyfield.quickfield.model.enums.Role;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    EmployeeResponse createEmployee(EmployeeRequest employeeRequest);
+    EmployeeResponse createEmployee(CreateEmployeeRequest employeeRequest);
 
     Page<EmployeeResponse> getAllEmployees(Pageable pageable, Role role);
 
@@ -18,7 +19,7 @@ public interface EmployeeService {
 
     List<EmployeeResponse> getAllEmployeesWithTasks();
 
-    EmployeeResponse updateEmployee(Long employeeId, EmployeeRequest employeeRequest);
+    EmployeeResponse updateEmployee(Long employeeId, UpdateEmployeeRequest employeeRequest);
 
     Long updateEmployeeRole(Long employeeId, Role role);
 
