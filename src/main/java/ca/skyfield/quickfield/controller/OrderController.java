@@ -1,6 +1,7 @@
 package ca.skyfield.quickfield.controller;
 
-import ca.skyfield.quickfield.dto.order.OrderRequest;
+import ca.skyfield.quickfield.dto.order.CreateOrderRequest;
+import ca.skyfield.quickfield.dto.order.UpdateOrderRequest;
 import ca.skyfield.quickfield.dto.order.OrderResponse;
 import ca.skyfield.quickfield.model.enums.OrderState;
 import ca.skyfield.quickfield.service.OrderServiceImpl;
@@ -29,7 +30,7 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<OrderResponse> createOrder(
-            @Valid @RequestBody OrderRequest orderRequest
+            @Valid @RequestBody CreateOrderRequest orderRequest
     ) {
         OrderResponse orderResponse = orderService.createOrder(orderRequest);
 
@@ -40,9 +41,9 @@ public class OrderController {
     @PutMapping("/{orderId}")
     public ResponseEntity<?> updateOrder(
             @PathVariable("orderId") Long orderId,
-            @Valid @RequestBody OrderRequest orderRequest
+            @Valid @RequestBody UpdateOrderRequest updateOrderRequest
     ) {
-        Long updatedOrderId = orderService.updateOrder(orderId, orderRequest);
+        Long updatedOrderId = orderService.updateOrder(orderId, updateOrderRequest).id();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/orders/" + updatedOrderId);
@@ -55,7 +56,7 @@ public class OrderController {
             @PathVariable("orderId") Long orderId,
             @Valid @RequestBody OrderState orderState
     ) {
-        Long updatedOrderId = orderService.updateOrderState(orderId, orderState);
+        Long updatedOrderId = orderService.updateOrderState(orderId, orderState).id();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/orders/status" + updatedOrderId);

@@ -1,6 +1,7 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.order.OrderRequest;
+import ca.skyfield.quickfield.dto.order.CreateOrderRequest;
+import ca.skyfield.quickfield.dto.order.UpdateOrderRequest;
 import ca.skyfield.quickfield.dto.order.OrderResponse;
 import ca.skyfield.quickfield.model.enums.OrderState;
 
@@ -8,13 +9,13 @@ import java.util.List;
 
 public interface OrderService {
 
-        OrderResponse createOrder(OrderRequest orderRequest);
+        OrderResponse createOrder(CreateOrderRequest orderRequest);
 
         List<OrderResponse> getAllOrders();
 
-        Long updateOrder(Long orderId, OrderRequest orderRequest);
+        OrderResponse updateOrder(Long orderId, UpdateOrderRequest updateOrderRequest);
 
-        Long updateOrderState(Long orderId, OrderState orderState);
+        OrderResponse updateOrderState(Long orderId, OrderState orderState);
 
         void deleteOrder(Long orderId);
 

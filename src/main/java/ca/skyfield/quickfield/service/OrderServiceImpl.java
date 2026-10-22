@@ -1,6 +1,7 @@
 package ca.skyfield.quickfield.service;
 
-import ca.skyfield.quickfield.dto.order.OrderRequest;
+import ca.skyfield.quickfield.dto.order.CreateOrderRequest;
+import ca.skyfield.quickfield.dto.order.UpdateOrderRequest;
 import ca.skyfield.quickfield.dto.order.OrderResponse;
 import ca.skyfield.quickfield.model.Order;
 import ca.skyfield.quickfield.model.enums.OrderState;
@@ -20,22 +21,18 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
     @Override
-    public OrderResponse createOrder(OrderRequest orderRequest) {
-        log.debug("Creating new order {}", orderRequest.id());
+    public OrderResponse createOrder(CreateOrderRequest orderRequest) {
+        log.debug("Creating new order {}", orderRequest);
 
         Order order = Order.builder()
                 .title(orderRequest.title())
                 .description(orderRequest.description())
-                .orderState(OrderState.TODO)
+                .orderState(OrderState.TODO) // Default order state
                 .build();
 
-        return new OrderResponse(
-                order.getId(),
-                order.getTitle(),
-                order.getDescription(),
-                order.getOrderState(),
-                List.of()
-        );
+        orderRepository.save(order);
+
+        return mapToOrderResponse(order);
     }
 
     @Override
@@ -49,32 +46,27 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
-    private OrderResponse mapToOrderResponse(Order order){
-        return new OrderResponse(
-                order.getId(),
-                order.getTitle(),
-                order.getDescription(),
-                order.getOrderState(),
-                List.of()
-        );
-    }
-
     @Override
-    public Long updateOrder(Long orderId, OrderRequest orderRequest) {
+    public OrderResponse updateOrder(Long orderId, UpdateOrderRequest orderRequest) {
         log.debug("Updating order with id {}", orderId);
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
-        order.setTitle(orderRequest.title());
-        order.setDescription(orderRequest.description());
-        order.setOrderState(orderRequest.orderState());
+        if (orderRequest.title() != null) {
+            order.setTitle(orderRequest.title());
+        }
+        if (orderRequest.description() != null) {
+            order.setDescription(orderRequest.description());
+        }
 
-        return orderRepository.save(order).getId();
+        Order updatedOrder = orderRepository.save(order);
+
+        return mapToOrderResponse(updatedOrder);
     }
 
     @Override
-    public Long updateOrderState(Long orderId, OrderState orderState) {
+    public OrderResponse updateOrderState(Long orderId, OrderState orderState) {
         log.debug("Updating order with id {}", orderId);
 
         Order order = orderRepository.findById(orderId)
@@ -89,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setOrderState(orderState);
 
-        return orderRepository.save(order).getId();
+        return mapToOrderResponse(order);
     }
 
     @Override
@@ -101,5 +93,15 @@ public class OrderServiceImpl implements OrderService {
         }
 
         orderRepository.deleteById(orderId);
+    }
+
+    private OrderResponse mapToOrderResponse(Order order){
+        return new OrderResponse(
+                order.getId(),
+                order.getTitle(),
+                order.getDescription(),
+                order.getOrderState(),
+                List.of()
+        );
     }
 }
