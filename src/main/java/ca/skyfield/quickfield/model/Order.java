@@ -3,6 +3,7 @@ package ca.skyfield.quickfield.model;
 import ca.skyfield.quickfield.model.enums.OrderState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class Order {
     @Column(nullable = false)
     private String description;
 
-    @NotBlank(message = "Status is required")
+    @NotNull(message = "Status is required")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderState orderState;
