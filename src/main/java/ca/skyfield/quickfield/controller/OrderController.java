@@ -10,17 +10,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderServiceImpl orderService;
 
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponse> getAllOrders() {
@@ -38,6 +42,7 @@ public class OrderController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
     @PutMapping("/{orderId}")
     public ResponseEntity<?> updateOrder(
             @PathVariable("orderId") Long orderId,
@@ -51,6 +56,7 @@ public class OrderController {
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasAnyAuthority('EMPLOYEE', 'MANAGER', 'ADMIN')")
     @PutMapping("/{orderId}/status")
     public ResponseEntity<?> updateOrderState(
             @PathVariable("orderId") Long orderId,
@@ -64,6 +70,7 @@ public class OrderController {
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{orderId}")
     public ResponseEntity<?> deleteOrder(
             @PathVariable("orderId") Long orderId
