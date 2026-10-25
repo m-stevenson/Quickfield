@@ -5,7 +5,6 @@ import ca.skyfield.quickfield.model.enums.OrderState;
 import java.util.List;
 
 public record UpdateOrderRequest(
-        Long id,
         String title,
         String description,
         OrderState orderState,
