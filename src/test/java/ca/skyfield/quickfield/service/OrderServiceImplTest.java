@@ -69,14 +69,14 @@ public class OrderServiceImplTest {
                 .id(1L)
                 .title("Order 1")
                 .description("order 1 desc")
-                .orderState(OrderState.TODO)
+                .orderState(OrderState.NEW)
                 .build());
 
         orders.add(Order.builder()
                 .id(2L)
                 .title("Order 2")
                 .description("order 2 desc")
-                .orderState(OrderState.TODO)
+                .orderState(OrderState.NEW)
                 .build());
 
         when(orderRepository.findAll())
@@ -88,7 +88,7 @@ public class OrderServiceImplTest {
 
         assertEquals(2, result.size());
         assertEquals("Order 2", result.get(1).title());
-        assertEquals(OrderState.TODO, result.get(1).orderState());
+        assertEquals(OrderState.NEW, result.get(1).orderState());
 
     }
 
@@ -99,7 +99,7 @@ public class OrderServiceImplTest {
                 .id(1L)
                 .title("Order Title")
                 .description("order desc")
-                .orderState(OrderState.TODO)
+                .orderState(OrderState.NEW)
                 .build();
 
         UpdateOrderRequest request =
@@ -122,7 +122,7 @@ public class OrderServiceImplTest {
         assertEquals(1L, result.id());
         assertEquals("Order Title", result.title());
         assertEquals("Updated desc", result.description());
-        assertEquals(OrderState.TODO, result.orderState());
+        assertEquals(OrderState.NEW, result.orderState());
         assertNotEquals("order desc", result.description());
 
     }
@@ -134,7 +134,7 @@ public class OrderServiceImplTest {
                 .id(1L)
                 .title("Order Title")
                 .description("order desc")
-                .orderState(OrderState.TODO)
+                .orderState(OrderState.NEW)
                 .build();
 
         when(orderRepository.findById(1L))
