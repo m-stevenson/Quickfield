@@ -11,9 +11,10 @@ public enum OrderState {
     public boolean canTransitionTo(OrderState targetState) {
         return switch (this) {
             case NEW -> targetState == ASSIGNED || targetState == CANCELLED;
-            case ASSIGNED, PAUSED -> targetState == IN_PROGRESS || targetState == CANCELLED;
+            case ASSIGNED -> targetState == IN_PROGRESS || targetState == PAUSED ||targetState == CANCELLED;
             case IN_PROGRESS -> targetState == COMPLETED || targetState == PAUSED || targetState == CANCELLED;
-            case COMPLETED,CANCELLED -> false;
+            case PAUSED -> targetState == IN_PROGRESS || targetState == CANCELLED;
+            case COMPLETED, CANCELLED -> false;
         };
     }
 
