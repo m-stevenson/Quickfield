@@ -34,11 +34,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderState orderState;
 
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "orders"
-    )
-    private List<Employee> employees;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employee assignedEmployee;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    private Customer customer;

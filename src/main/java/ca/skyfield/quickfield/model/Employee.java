@@ -52,7 +52,10 @@ public class Employee implements Serializable {
     @Column(nullable = false)
     private Role role;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "assignedEmployee"
+    )
     @JoinTable(
             name = "employee_order",
             joinColumns = @JoinColumn(name = "employee_id"),
