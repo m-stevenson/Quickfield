@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.builder()
                 .title(orderRequest.title())
                 .description(orderRequest.description())
-                .orderState(OrderState.TODO) // Default order state
+                .orderState(OrderState.NEW) // Default order state
                 .build();
 
         orderRepository.save(order);

@@ -1,15 +1,18 @@
 package ca.skyfield.quickfield.model.enums;
 
 public enum OrderState {
-    TODO,
+    NEW,
+    ASSIGNED,
     IN_PROGRESS,
-    CANCELLED,
-    COMPLETED;
+    PAUSED,
+    COMPLETED,
+    CANCELLED;
 
     public boolean canTransitionTo(OrderState targetState) {
         return switch (this) {
-            case TODO -> targetState == IN_PROGRESS || targetState == CANCELLED;
-            case IN_PROGRESS -> targetState == COMPLETED || targetState == CANCELLED;
+            case NEW -> targetState == ASSIGNED || targetState == CANCELLED;
+            case ASSIGNED, PAUSED -> targetState == IN_PROGRESS || targetState == CANCELLED;
+            case IN_PROGRESS -> targetState == COMPLETED || targetState == PAUSED || targetState == CANCELLED;
             case COMPLETED,CANCELLED -> false;
         };
     }
