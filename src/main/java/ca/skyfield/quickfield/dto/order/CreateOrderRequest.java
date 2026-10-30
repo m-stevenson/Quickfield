@@ -1,6 +1,8 @@
 package ca.skyfield.quickfield.dto.order;
 
+import ca.skyfield.quickfield.dto.customer.CustomerRequest;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record CreateOrderRequest(
 
@@ -8,8 +10,9 @@ public record CreateOrderRequest(
         String title,
 
         @NotBlank(message = "Order description is required")
-        String description
+        String description,
 
-        // Customer
+        @NotNull(message = "Customer information is required")
+        CustomerRequest customer
 ) {
 }
