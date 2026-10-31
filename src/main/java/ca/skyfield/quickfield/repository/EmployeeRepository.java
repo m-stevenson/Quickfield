@@ -8,13 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("SELECT DISTINCT e FROM Employee e LEFT JOIN FETCH e.orders")
     List<Employee> findAllWithOrders();
 
-    Employee findByEmail(String email);
+    Optional<Employee> findByEmail(String email);
 
     boolean existsByEmail(String email);
 
