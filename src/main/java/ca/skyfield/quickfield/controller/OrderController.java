@@ -4,13 +4,10 @@ import ca.skyfield.quickfield.dto.order.AssignOrderRequest;
 import ca.skyfield.quickfield.dto.order.CreateOrderRequest;
 import ca.skyfield.quickfield.dto.order.UpdateOrderRequest;
 import ca.skyfield.quickfield.dto.order.OrderResponse;
-import ca.skyfield.quickfield.model.Order;
 import ca.skyfield.quickfield.model.enums.OrderState;
-import ca.skyfield.quickfield.model.enums.Role;
 import ca.skyfield.quickfield.service.OrderServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -65,7 +60,6 @@ public class OrderController {
         OrderResponse orderResponse = orderService.createOrder(orderRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
-
     }
 
     @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
@@ -79,7 +73,6 @@ public class OrderController {
                 orderService.assignOrder(orderId, request.employeeId());
 
         return ResponseEntity.ok(response);
-
     }
 
     @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
@@ -110,6 +103,21 @@ public class OrderController {
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasAnyAuthority('EMPLOYEE', 'MANAGER', 'ADMIN')")
+    @GetMapping("/my")
+    public ResponseEntity<Page<OrderResponse>> getMyOrders(
+            Authentication authentication,
+            Pageable pageable
+    ) {
+
+        String email = authentication.getName();
+
+        return ResponseEntity.ok(
+                orderService.getOrdersForEmployee(email, pageable)
+        );
+
+    }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{orderId}")
     public ResponseEntity<?> deleteOrder(
@@ -119,7 +127,5 @@ public class OrderController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
 
 }
