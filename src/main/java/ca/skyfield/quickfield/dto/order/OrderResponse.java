@@ -9,6 +9,6 @@ public record OrderResponse(
         String title,
         String description,
         OrderState orderState,
-        List<Long> employeeIds
+        Long employeeId
 ) {
 }
