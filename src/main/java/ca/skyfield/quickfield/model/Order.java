@@ -35,6 +35,7 @@ public class Order {
     private OrderState orderState;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
     private Employee assignedEmployee;
 
 //    @ManyToOne(fetch = FetchType.LAZY)

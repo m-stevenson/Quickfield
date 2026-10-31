@@ -56,11 +56,6 @@ public class Employee implements Serializable {
             fetch = FetchType.LAZY,
             mappedBy = "assignedEmployee"
     )
-    @JoinTable(
-            name = "employee_order",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
-    )
     private List<Order> orders = new ArrayList<>();
 
 }
