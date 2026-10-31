@@ -3,6 +3,7 @@ package ca.skyfield.quickfield.service;
 import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.repository.EmployeeRepository;
 import ca.skyfield.quickfield.security.EmployeeUserDetails;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +19,8 @@ public class EmployeeUserDetailsService implements UserDetailsService {
 
     @Override
     public EmployeeUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Employee employee = employeeRepository.findByEmail(email);
+        Employee employee = employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Email not found"));
         if (employee == null) {
             throw new UsernameNotFoundException("Employee not found with emaiL: " + email);
         }
