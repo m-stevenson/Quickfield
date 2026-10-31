@@ -22,6 +22,8 @@ public interface OrderService {
 
         OrderResponse assignOrder(Long orderId, Long employeeId);
 
+        Page<OrderResponse> getOrdersForEmployee(String email, Pageable pageable);
+
         void deleteOrder(Long orderId);
 
     }

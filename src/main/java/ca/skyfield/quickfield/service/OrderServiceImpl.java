@@ -112,11 +112,26 @@ public class OrderServiceImpl implements OrderService {
         }
 
         order.setOrderState(OrderState.ASSIGNED);
+        order.setAssignedEmployee(employee);
         employee.getOrders().add(order);
 
         employeeRepository.save(employee);
 
-        return mapToOrderResponse(order);
+        Order savedOrder = orderRepository.save(order);
+
+        return mapToOrderResponse(savedOrder);
+    }
+
+    @Override
+    public Page<OrderResponse> getOrdersForEmployee(String email, Pageable pageable) {
+        log.info("Getting page {} of orders assigned to employee with email {}", pageable.getPageNumber(), email);
+
+        Employee employee = employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+
+        return orderRepository
+                .findByAssignedEmployeeId(employee.getId(), pageable)
+                .map(this::mapToOrderResponse);
     }
 
     @Override
@@ -131,12 +146,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderResponse mapToOrderResponse(Order order){
+
+        Long employeeId = order.getAssignedEmployee() == null
+                ? null
+                : order.getAssignedEmployee().getId();
+
+
         return new OrderResponse(
                 order.getId(),
                 order.getTitle(),
                 order.getDescription(),
                 order.getOrderState(),
-                List.of()
+                employeeId
         );
     }
 }
