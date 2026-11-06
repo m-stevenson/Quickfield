@@ -123,7 +123,7 @@ public class OrderController {
     public ResponseEntity<?> deleteOrder(
             @PathVariable("orderId") Long orderId
     ) {
-        orderService.deleteOrder(orderId);
+        orderService.updateOrderState(orderId, OrderState.CANCELLED);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
