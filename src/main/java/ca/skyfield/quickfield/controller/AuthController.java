@@ -16,10 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +42,9 @@ public class AuthController {
         return jwtUtils.generateToken(details.getUsername());
     }
 
+    @PostMapping("/logout")
+    public void logoutUser(){}
+
     @PostMapping("/register")
     public ResponseEntity<?> registerEmployee(
             @RequestBody @Valid RegisterRequest request
@@ -67,6 +67,15 @@ public class AuthController {
         employeeRepository.save(employee);
 
         return ResponseEntity.ok("Employee registered successfully");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(
+            Authentication authentication
+    ) {
+
+        return ResponseEntity.ok(authentication.getName());
+
     }
 
 }
