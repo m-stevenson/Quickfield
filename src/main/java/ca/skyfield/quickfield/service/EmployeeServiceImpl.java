@@ -168,4 +168,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeRepository.deleteById(employeeId);
     }
+
+    @Override
+    public EmployeeResponse getEmployeeByEmail(String email) {
+        log.info("Getting employee details of email {}", email);
+
+        Employee employee = employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+
+        return mapToEmployeeResponse(employee);
+
+    }
 }

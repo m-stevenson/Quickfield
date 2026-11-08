@@ -25,5 +25,6 @@ public interface EmployeeService {
 
     void deleteEmployee(Long employeeId);
 
+    EmployeeResponse getEmployeeByEmail(String email);
 
 }
