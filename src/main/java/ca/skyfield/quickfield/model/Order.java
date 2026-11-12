@@ -38,7 +38,7 @@ public class Order {
     @JoinColumn(name = "employee_id")
     private Employee assignedEmployee;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Customer customer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 
 }
