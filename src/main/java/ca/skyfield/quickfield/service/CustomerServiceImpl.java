@@ -57,6 +57,9 @@ public class CustomerServiceImpl implements CustomerService {
         if (request.phone() != null) {
             customer.setPhone(request.phone());
         }
+        if (request.address() != null) {
+            customer.setAddress(request.address());
+        }
         if (request.email() != null) {
             customer.setEmail(request.email());
         }

@@ -4,6 +4,7 @@ public record UpdateCustomerRequest(
         String firstName,
         String lastName,
         String phone,
+        String address,
         String email
 ) {
 }
