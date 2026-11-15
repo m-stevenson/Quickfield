@@ -1,11 +1,14 @@
 package ca.skyfield.quickfield.service;
 
+import ca.skyfield.quickfield.dto.customer.CustomerResponse;
 import ca.skyfield.quickfield.dto.order.CreateOrderRequest;
 import ca.skyfield.quickfield.dto.order.UpdateOrderRequest;
 import ca.skyfield.quickfield.dto.order.OrderResponse;
+import ca.skyfield.quickfield.model.Customer;
 import ca.skyfield.quickfield.model.Employee;
 import ca.skyfield.quickfield.model.Order;
 import ca.skyfield.quickfield.model.enums.OrderState;
+import ca.skyfield.quickfield.repository.CustomerRepository;
 import ca.skyfield.quickfield.repository.EmployeeRepository;
 import ca.skyfield.quickfield.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,22 +26,37 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-
+    private final CustomerRepository customerRepository;
     private final EmployeeRepository employeeRepository;
 
     @Override
     public OrderResponse createOrder(CreateOrderRequest orderRequest) {
         log.debug("Creating new order {}", orderRequest);
 
+        Customer customer = customerRepository
+                .findByEmail(orderRequest.customer().email())
+                .orElseGet(() -> {
+                    Customer newCustomer = Customer.builder()
+                            .firstName(orderRequest.customer().firstName())
+                            .lastName(orderRequest.customer().lastName())
+                            .phone(orderRequest.customer().phone())
+                            .address(orderRequest.customer().address())
+                            .email(orderRequest.customer().email())
+                            .build();
+
+                    return customerRepository.save(newCustomer);
+                });
+
         Order order = Order.builder()
                 .title(orderRequest.title())
                 .description(orderRequest.description())
                 .orderState(OrderState.NEW) // Default order state
+                .customer(customer)
                 .build();
 
-        orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
 
-        return mapToOrderResponse(order);
+        return mapToOrderResponse(savedOrder);
     }
 
     @Override
