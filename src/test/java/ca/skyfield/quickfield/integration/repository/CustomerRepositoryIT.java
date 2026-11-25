@@ -1,4 +1,4 @@
-package ca.skyfield.quickfield.integration;
+package ca.skyfield.quickfield.integration.repository;
 
 import ca.skyfield.quickfield.dto.customer.UpdateCustomerRequest;
 import ca.skyfield.quickfield.model.Customer;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
@@ -57,6 +58,27 @@ public class CustomerRepositoryIT {
     }
 
     @Test
+    void shouldFindCustomerById() {
+
+        Customer customer = Customer.builder()
+                .firstName("Cust")
+                .lastName("Last")
+                .phone("555-111-0000")
+                .address("123 Street Ave")
+                .email("email@test.ca")
+                .build();
+
+        Long id = customerRepository.saveAndFlush(customer).getId();
+        entityManager.clear();
+
+        Customer customerToFind = customerRepository.findById(id).orElseThrow();
+
+        assertNotNull(id);
+        assertEquals("Cust", customerToFind.getFirstName());
+        assertEquals("email@test.ca", customerToFind.getEmail());
+    }
+
+    @Test
     void shouldUpdateCustomer() {
 
         Customer customer = Customer.builder()
@@ -86,6 +108,62 @@ public class CustomerRepositoryIT {
         assertEquals("555-111-0000", updatedCustomer.getPhone());
         assertEquals("123 Street Ave", updatedCustomer.getAddress());
         assertEquals("email@test.ca", updatedCustomer.getEmail());
+    }
+
+    @Test
+    void shouldReturnEmptyWhenCustomerNotFound() {
+
+        String email = "false@test.ca";
+
+        Optional<Customer> customer = customerRepository.findByEmail(email);
+
+        assertEquals(Optional.empty(), customer);
+    }
+
+    @Test
+    void shouldEnforceUniqueEmail() {
+
+        Customer customer = Customer.builder()
+                .firstName("Cust")
+                .lastName("Last")
+                .phone("555-111-0000")
+                .address("123 Street Ave")
+                .email("email@test.ca")
+                .build();
+
+        Customer duplicate = Customer.builder()
+                .firstName("Cust")
+                .lastName("Last")
+                .phone("555-111-0000")
+                .address("123 Street Ave")
+                .email("email@test.ca")
+                .build();
+
+        customerRepository.saveAndFlush(customer);
+
+        assertThrows(DataIntegrityViolationException.class,
+                () -> customerRepository.saveAndFlush(duplicate)
+        );
+
+    }
+
+    @Test
+    void shouldDeleteCustomer() {
+
+        Customer customer = Customer.builder()
+                .firstName("Cust")
+                .lastName("Last")
+                .phone("555-111-0000")
+                .address("123 Street Ave")
+                .email("email@test.ca")
+                .build();
+        customerRepository.saveAndFlush(customer);
+
+        customerRepository.delete(customer);
+
+        Optional<Customer> deletedCustomer = customerRepository.findById(customer.getId());
+
+        assertEquals(Optional.empty(), deletedCustomer);
     }
 
 }
